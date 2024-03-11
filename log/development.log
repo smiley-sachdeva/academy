@@ -220,3 +220,139 @@ Processing by CoursesController#index as JSON
 Completed 200 OK in 6ms (Views: 4.4ms | ActiveRecord: 0.8ms | Allocations: 1791)
 
 
+Started GET "/courses.json" for ::1 at 2024-03-11 18:23:16 +0400
+  [1m[35m (9.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by CoursesController#index as JSON
+  Rendering courses/index.json.jbuilder
+  [1m[36mCourse Load (32.6ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  ↳ app/views/courses/index.json.jbuilder:1
+  Rendered collection of courses/_course.json.jbuilder [1 times] (Duration: 1.5ms | Allocations: 205)
+  Rendered courses/index.json.jbuilder (Duration: 181.9ms | Allocations: 12885)
+Completed 200 OK in 499ms (Views: 198.0ms | ActiveRecord: 86.9ms | Allocations: 18577)
+
+
+Started POST "/courses.json" for ::1 at 2024-03-11 18:23:30 +0400
+Processing by CoursesController#create as JSON
+  Parameters: {"course"=>{"name"=>"React1"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/courses_controller.rb:18:in `block in create'
+  [1m[36mCourse Create (41.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "React1"], ["created_at", "2024-03-11 14:23:30.203749"], ["updated_at", "2024-03-11 14:23:30.203749"]]
+  ↳ app/controllers/courses_controller.rb:18:in `block in create'
+  [1m[35m (45.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/courses_controller.rb:18:in `block in create'
+  Rendering courses/show.json.jbuilder
+  Rendered courses/_course.json.jbuilder (Duration: 0.9ms | Allocations: 136)
+  Rendered courses/show.json.jbuilder (Duration: 5.7ms | Allocations: 457)
+Completed 201 Created in 99ms (Views: 7.3ms | ActiveRecord: 87.2ms | Allocations: 10716)
+
+
+Started GET "/courses.json" for ::1 at 2024-03-11 18:23:35 +0400
+Processing by CoursesController#index as JSON
+  Rendering courses/index.json.jbuilder
+  [1m[36mCourse Load (0.3ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  ↳ app/views/courses/index.json.jbuilder:1
+  Rendered collection of courses/_course.json.jbuilder [2 times] (Duration: 0.6ms | Allocations: 182)
+  Rendered courses/index.json.jbuilder (Duration: 3.4ms | Allocations: 1152)
+Completed 200 OK in 5ms (Views: 3.9ms | ActiveRecord: 0.3ms | Allocations: 1524)
+
+
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5259941444891727195)[0m
+  [1m[35m (7.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTalents (20240311153532)
+  [1m[35m (40.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (87.8ms)[0m  [1m[35mCREATE TABLE "talents" ("id" bigserial primary key, "name" character varying, "email" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240311153532"]]
+  [1m[35m (7.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (37.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5259941444891727195)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/talents.json" for ::1 at 2024-03-11 19:41:44 +0400
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TalentsController#index as JSON
+  Rendering talents/index.json.jbuilder
+  [1m[36mTalent Load (1.3ms)[0m  [1m[34mSELECT "talents".* FROM "talents"[0m
+  ↳ app/views/talents/index.json.jbuilder:1
+  Rendered collection of talents/_talent.json.jbuilder [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered talents/index.json.jbuilder (Duration: 28.9ms | Allocations: 1526)
+Completed 200 OK in 199ms (Views: 52.1ms | ActiveRecord: 10.0ms | Allocations: 4962)
+
+
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTalent Create (40.9ms)[0m  [1m[32mINSERT INTO "talents" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "smiley"], ["email", "smiiley@gmail.com"], ["created_at", "2024-03-11 15:42:39.896629"], ["updated_at", "2024-03-11 15:42:39.896629"]]
+  [1m[35m (43.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/talents.json" for ::1 at 2024-03-11 19:42:44 +0400
+Processing by TalentsController#index as JSON
+  Rendering talents/index.json.jbuilder
+  [1m[36mTalent Load (1.2ms)[0m  [1m[34mSELECT "talents".* FROM "talents"[0m
+  ↳ app/views/talents/index.json.jbuilder:1
+  Rendered collection of talents/_talent.json.jbuilder [1 times] (Duration: 8.4ms | Allocations: 211)
+  Rendered talents/index.json.jbuilder (Duration: 20.8ms | Allocations: 3650)
+Completed 200 OK in 22ms (Views: 15.4ms | ActiveRecord: 5.9ms | Allocations: 4022)
+
+
+Started POST "/talents.json" for ::1 at 2024-03-11 19:43:38 +0400
+Processing by TalentsController#create as JSON
+  Parameters: {"talent"=>{"name"=>"Gautam", "email"=>"gautam@gmail.com"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/talents_controller.rb:18:in `block in create'
+  [1m[36mTalent Create (0.8ms)[0m  [1m[32mINSERT INTO "talents" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Gautam"], ["email", "gautam@gmail.com"], ["created_at", "2024-03-11 15:43:38.144350"], ["updated_at", "2024-03-11 15:43:38.144350"]]
+  ↳ app/controllers/talents_controller.rb:18:in `block in create'
+  [1m[35m (46.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/talents_controller.rb:18:in `block in create'
+  Rendering talents/show.json.jbuilder
+  Rendered talents/_talent.json.jbuilder (Duration: 3.7ms | Allocations: 138)
+  Rendered talents/show.json.jbuilder (Duration: 14.9ms | Allocations: 471)
+Completed 201 Created in 68ms (Views: 16.5ms | ActiveRecord: 47.6ms | Allocations: 3623)
+
+
+Started PATCH "/talents/1.json" for ::1 at 2024-03-11 19:44:53 +0400
+Processing by TalentsController#update as JSON
+  Parameters: {"talent"=>{"name"=>"Smiley Sachdeva"}, "id"=>"1"}
+  [1m[36mTalent Load (0.2ms)[0m  [1m[34mSELECT "talents".* FROM "talents" WHERE "talents"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/talents_controller.rb:49:in `set_talent'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/talents_controller.rb:29:in `block in update'
+  [1m[36mTalent Update (2.3ms)[0m  [1m[33mUPDATE "talents" SET "name" = $1, "updated_at" = $2 WHERE "talents"."id" = $3[0m  [["name", "Smiley Sachdeva"], ["updated_at", "2024-03-11 15:44:53.719464"], ["id", 1]]
+  ↳ app/controllers/talents_controller.rb:29:in `block in update'
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/talents_controller.rb:29:in `block in update'
+  Rendering talents/show.json.jbuilder
+  Rendered talents/_talent.json.jbuilder (Duration: 0.2ms | Allocations: 76)
+  Rendered talents/show.json.jbuilder (Duration: 0.5ms | Allocations: 249)
+Completed 200 OK in 40ms (Views: 1.0ms | ActiveRecord: 4.6ms | Allocations: 6533)
+
+
+Started DELETE "/talents/1.json" for ::1 at 2024-03-11 19:45:23 +0400
+Processing by TalentsController#destroy as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mTalent Load (0.4ms)[0m  [1m[34mSELECT "talents".* FROM "talents" WHERE "talents"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/talents_controller.rb:49:in `set_talent'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/talents_controller.rb:39:in `destroy'
+  [1m[36mTalent Destroy (0.3ms)[0m  [1m[31mDELETE FROM "talents" WHERE "talents"."id" = $1[0m  [["id", 1]]
+  ↳ app/controllers/talents_controller.rb:39:in `destroy'
+  [1m[35m (7.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/talents_controller.rb:39:in `destroy'
+Completed 204 No Content in 14ms (ActiveRecord: 7.8ms | Allocations: 5288)
+
+
+Started GET "/talents.json" for ::1 at 2024-03-11 19:45:36 +0400
+Processing by TalentsController#index as JSON
+  Rendering talents/index.json.jbuilder
+  [1m[36mTalent Load (0.2ms)[0m  [1m[34mSELECT "talents".* FROM "talents"[0m
+  ↳ app/views/talents/index.json.jbuilder:1
+  Rendered collection of talents/_talent.json.jbuilder [1 times] (Duration: 0.4ms | Allocations: 105)
+  Rendered talents/index.json.jbuilder (Duration: 2.1ms | Allocations: 1003)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.2ms | Allocations: 1367)
+
+
+Started GET "/talents.json" for ::1 at 2024-03-11 19:48:30 +0400
+Processing by TalentsController#index as JSON
+  Rendering talents/index.json.jbuilder
+  [1m[36mTalent Load (0.4ms)[0m  [1m[34mSELECT "talents".* FROM "talents"[0m
+  ↳ app/views/talents/index.json.jbuilder:1
+  Rendered collection of talents/_talent.json.jbuilder [1 times] (Duration: 2.5ms | Allocations: 171)
+  Rendered talents/index.json.jbuilder (Duration: 9.9ms | Allocations: 1267)
+Completed 200 OK in 21ms (Views: 18.7ms | ActiveRecord: 0.4ms | Allocations: 2821)
+
+

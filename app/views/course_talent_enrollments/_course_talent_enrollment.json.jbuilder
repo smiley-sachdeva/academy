@@ -1,0 +1,1 @@
+json.extract! enrollment, :id, :course_id,:talent_id, :status, :created_at, :updated_at

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_11_181927) do
+ActiveRecord::Schema.define(version: 2024_03_12_085321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 2024_03_11_181927) do
     t.index ["author_id"], name: "index_course_authors_on_author_id"
     t.index ["course_id", "author_id"], name: "index_course_authors_on_course_id_and_author_id", unique: true
     t.index ["course_id"], name: "index_course_authors_on_course_id"
+  end
+
+  create_table "course_learning_paths", force: :cascade do |t|
+    t.bigint "course_id"
+    t.bigint "learning_path_id"
+    t.integer "sequence"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id", "learning_path_id", "sequence"], name: "unique_sequence", unique: true
+    t.index ["course_id", "learning_path_id"], name: "index_course_learning_paths_on_course_id_and_learning_path_id", unique: true
+    t.index ["course_id"], name: "index_course_learning_paths_on_course_id"
+    t.index ["learning_path_id"], name: "index_course_learning_paths_on_learning_path_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -46,4 +58,6 @@ ActiveRecord::Schema.define(version: 2024_03_11_181927) do
 
   add_foreign_key "course_authors", "courses"
   add_foreign_key "course_authors", "talents", column: "author_id"
+  add_foreign_key "course_learning_paths", "courses"
+  add_foreign_key "course_learning_paths", "learning_paths"
 end

@@ -1,5 +1,5 @@
 class LearningPathsController < ApplicationController
-  before_action :set_learning_path, only: %i[ show update destroy ]
+  before_action :set_learning_path, only: %i[ show update destroy align_courses ]
 
   # GET /learning_paths or /learning_paths.json
   def index
@@ -43,6 +43,15 @@ class LearningPathsController < ApplicationController
     end
   end
 
+  def align_courses
+    learning_path_params[:courses].each do |course|
+      @learning_path.course_learning_paths.build(course_id: course[:id], sequence: course[:sequence])
+    end
+    @learning_path.save
+    
+    render json: @learning_path.courses, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_learning_path
@@ -51,6 +60,6 @@ class LearningPathsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def learning_path_params
-      params.require(:learning_path).permit(:name)
+      params.require(:learning_path).permit(:name, courses: [:id, :sequence])
     end
 end

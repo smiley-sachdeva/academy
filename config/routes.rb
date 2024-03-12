@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :talents do
     resources :course_talent_enrollments, only: [:index] 
+    resources :talent_learning_path_enrollments, only: [:index, :create] 
   end
 
   post '/course_talent_enrollments/:id/change_status', to: 'course_talent_enrollments#change_status'

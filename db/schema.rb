@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_12_151232) do
+ActiveRecord::Schema.define(version: 2024_03_12_170222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(version: 2024_03_12_151232) do
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "talent_learning_path_enrollment_id", null: false
     t.index ["course_id"], name: "index_course_talent_enrollments_on_course_id"
     t.index ["talent_id"], name: "index_course_talent_enrollments_on_talent_id"
+    t.index ["talent_learning_path_enrollment_id"], name: "course_talents"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -59,6 +61,16 @@ ActiveRecord::Schema.define(version: 2024_03_12_151232) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "talent_learning_path_enrollments", force: :cascade do |t|
+    t.bigint "learning_path_id"
+    t.bigint "talent_id"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["learning_path_id"], name: "index_talent_learning_path_enrollments_on_learning_path_id"
+    t.index ["talent_id"], name: "index_talent_learning_path_enrollments_on_talent_id"
+  end
+
   create_table "talents", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -71,5 +83,8 @@ ActiveRecord::Schema.define(version: 2024_03_12_151232) do
   add_foreign_key "course_learning_paths", "courses"
   add_foreign_key "course_learning_paths", "learning_paths"
   add_foreign_key "course_talent_enrollments", "courses"
+  add_foreign_key "course_talent_enrollments", "talent_learning_path_enrollments"
   add_foreign_key "course_talent_enrollments", "talents"
+  add_foreign_key "talent_learning_path_enrollments", "learning_paths"
+  add_foreign_key "talent_learning_path_enrollments", "talents"
 end

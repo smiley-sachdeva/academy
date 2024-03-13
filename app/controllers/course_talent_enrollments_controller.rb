@@ -9,7 +9,7 @@ class CourseTalentEnrollmentsController < ApplicationController
     def change_status
         respond_to do |format|
             if  @enrollment.update(enrollment_params)
-              format.json { render @enrollment, status: :ok, location: @enrollment, as: :enrollment }
+              format.json { render @enrollment, status: :ok, as: :enrollment }
             else
               format.json { render json: @enrollment.errors, status: :unprocessable_entity }
             end

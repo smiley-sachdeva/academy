@@ -1,1 +1,1 @@
-json.extract! enrollment, :id, :course_id,:talent_id, :status, :created_at, :updated_at
+json.extract! enrollment, :id, :course_id,:talent_id,:talent_learning_path_enrollment_id,:status, :created_at, :updated_at

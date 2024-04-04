@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_13_100217) do
+ActiveRecord::Schema.define(version: 2024_04_04_084642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2024_03_13_100217) do
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["learning_path_id", "talent_id", "status"], name: "unique_learning_path_enrollment", unique: true
     t.index ["learning_path_id"], name: "index_talent_learning_path_enrollments_on_learning_path_id"
     t.index ["talent_id"], name: "index_talent_learning_path_enrollments_on_talent_id"
   end

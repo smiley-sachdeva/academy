@@ -13,55 +13,47 @@ class CoursesController < ApplicationController
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-    enroll_authors
-
-    respond_to do |format|
-      if @course.save
+    if @course.save
+      respond_to do |format|
         format.json { render :show, status: :created, location: @course }
-      else
-        format.json { render json: @course.errors, status: :unprocessable_entity }
       end
+    else
+      render json: @course.errors, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Author not found' }, status: :not_found
   end
 
   # PATCH/PUT /courses/1.json
   def update
-    respond_to do |format|
-      if @course.update(course_params)
+    if @course.update(course_params)
+      
+      byebug
+      # Delete existing CourseAuthors that are not in the updated author_ids array
+      @course.course_authors.where.not(author_id: course_params[:author_ids]).destroy_all
+
+      respond_to do |format|
         format.json { render :show, status: :ok, location: @course }
-      else
-        format.json { render json: @course.errors, status: :unprocessable_entity }
       end
+    else
+      render json: @course.errors, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Author not found' }, status: :not_found
   end
 
   # DELETE /courses/1.json
   def destroy
     @course.destroy
-
-    respond_to do |format|
-      format.json { head :no_content }
-    end
-  end
-
-  #TODO exception handling -- if authors already enrolled, if authors doesnot exist
-  def add_authors
-    enroll_authors
-    render json: @course.authors, status: :ok
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    #TODO exception for course not found
     def set_course
       @course = Course.find(params[:id])
-    end
-
-    #Enroll author to a course
-    def enroll_authors
-      authors = Talent.where(id: course_params[:author_ids])
-      @course.authors = authors
-    end
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'Course not found' }, status: :not_found
+    end  
 
     # Only allow a list of trusted parameters through.
     def course_params

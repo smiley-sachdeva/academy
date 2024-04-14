@@ -17,10 +17,15 @@ class Talent < ApplicationRecord
 
     def assign_to_next_author
         rand_author =  CourseAuthor.where.not(author_id: self.id).order("RANDOM()").limit(1).first
+        delete_course_authors unless rand_author
         course_authors.each do |record| 
             record.author = Talent.find(rand_author.author_id)
             record.save 
         end
+    end
+
+    def delete_course_authors
+        self.course_authors.delete_all
     end
 
 end

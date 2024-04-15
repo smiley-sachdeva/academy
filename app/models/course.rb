@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
   include ValidatesNamePresenceAndUniqueness
   include ValidatesAuthorPresence
-
+  
   #Associations
   has_many :course_authors, dependent: :destroy
   has_many :authors, through: :course_authors

@@ -28,9 +28,8 @@ class CoursesController < ApplicationController
   def update
     if @course.update(course_params)
       
-      byebug
       # Delete existing CourseAuthors that are not in the updated author_ids array
-      @course.course_authors.where.not(author_id: course_params[:author_ids]).destroy_all
+      @course.course_authors.where.not(author_id: course_params[:author_ids]).destroy_all if course_params[:author_ids]
 
       respond_to do |format|
         format.json { render :show, status: :ok, location: @course }

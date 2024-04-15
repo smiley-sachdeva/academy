@@ -1,4 +1,7 @@
 class Talent < ApplicationRecord
+    include ValidatesNamePresenceAndUniqueness
+    include ValidatesEmailPresenceAndUniqueness
+
     has_many :course_authors, foreign_key: 'author_id'
     has_many :authored_courses, through: :course_authors, source: :course
 
@@ -8,24 +11,26 @@ class Talent < ApplicationRecord
 
     before_destroy :assign_to_next_author, if: :is_author?
 
-    #TODO Email validation unique
-
     private
     def is_author?
         self.course_authors.present?
     end
 
     def assign_to_next_author
-        rand_author =  CourseAuthor.where.not(author_id: self.id).order("RANDOM()").limit(1).first
-        delete_course_authors unless rand_author
-        course_authors.each do |record| 
-            record.author = Talent.find(rand_author.author_id)
-            record.save 
+        next_course_author =  CourseAuthor.next_author(id)
+        next_author = Talent.find(next_course_author.author_id)
+
+        #Delete course's authors if next author doesnt exist
+        delete_course_authors unless next_author
+
+        #Update Course's authors to next author
+        course_authors.each do |course_author| 
+            course_author.update(author: next_author)
         end
     end
 
     def delete_course_authors
-        self.course_authors.delete_all
+        self.course_authors.destroy_all
     end
 
 end

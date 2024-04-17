@@ -8,8 +8,13 @@ class CourseTalentEnrollment < ApplicationRecord
     validates :status, inclusion: { in: %w(Not\ started In\ progress Completed), message: "%{value} is not a valid status" }
 
     after_update :assign_next_course, if: :completed?
+    after_initialize :set_default_status, if: :new_record?
 
     private
+    def set_default_status
+        self.status ||=  'In progress'
+    end
+    
     def completed?
         saved_change_to_attribute?(:status) && status == 'Completed'
     end

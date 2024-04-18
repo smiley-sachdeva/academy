@@ -10,7 +10,13 @@ class TalentLearningPathEnrollmentsController < ApplicationController
 
     respond_to do |format|
       if @enrollment.save
-        format.json { render @enrollment, status: :ok, as: :enrollment }
+        format.json { render json: { 
+                              enrollment: @enrollment,
+                              errors: @enrollment.errors
+                            }, 
+                            status: :ok, 
+                            as: :enrollment 
+                    }
       else
         format.json { render json: @enrollment.errors, status: :unprocessable_entity }
       end

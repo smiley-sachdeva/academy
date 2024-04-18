@@ -14,39 +14,38 @@ class TalentsController < ApplicationController
   def create
     @talent = Talent.new(talent_params)
 
-    respond_to do |format|
-      if @talent.save
+    if @talent.save
+      respond_to do |format|
         format.json { render :show, status: :created, location: @talent }
-      else
-        format.json { render json: @talent.errors, status: :unprocessable_entity }
       end
+    else
+      render json: @talent.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /talents/1 or /talents/1.json
-  def update
-    respond_to do |format|
-      if @talent.update(talent_params)
+  def update   
+    if @talent.update(talent_params)
+      respond_to do |format|
         format.json { render :show, status: :ok, location: @talent }
-      else
-        format.json { render json: @talent.errors, status: :unprocessable_entity }
       end
-    end
+    else
+      render json: @talent.errors, status: :unprocessable_entity
+    end    
   end
 
   # DELETE /talents/1 or /talents/1.json
   def destroy
     @talent.destroy
-
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_talent
       @talent = Talent.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'Talent not found' }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.

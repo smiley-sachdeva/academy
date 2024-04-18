@@ -10,6 +10,11 @@ class TalentLearningPathEnrollment < ApplicationRecord
     after_initialize :set_default_status, if: :new_record?
     after_create :enroll_in_first_course
 
+    # Scopes
+
+    # Scope to find specific status enrollemnts
+    scope :with_status, ->(status){ where(status: status) }
+
     private
 
     def set_default_status
